@@ -5,11 +5,11 @@ from PyPDF2 import PdfFileWriter
 
 # this script splits out pages of a pdf invoice and renames them after the invoice #
 
-invoicePDF = fd.askopenfilename()
+invoicePDF = fd.askopenfilename() # user picks a file
+os.chdir(os.path.dirname(invoicePDF)) # set working dir to path of file
 
 with open(invoicePDF, 'rb') as pdfFileObj:
     pdfReader = PyPDF2.PdfFileReader(pdfFileObj)
-# pdfReader.numPages
 
     x = 1     # skips cover page
 
