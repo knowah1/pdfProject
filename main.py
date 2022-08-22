@@ -1,0 +1,30 @@
+import os
+from tkinter import filedialog as fd
+import PyPDF2
+from PyPDF2 import PdfFileWriter
+
+# this script splits out pages of a pdf invoice and renames them after the invoice #
+
+invoicePDF = fd.askopenfilename()
+
+with open(invoicePDF, 'rb') as pdfFileObj:
+    pdfReader = PyPDF2.PdfFileReader(pdfFileObj)
+# pdfReader.numPages
+
+    x = 1     # skips cover page
+
+    while x < pdfReader.numPages - 1:
+        pageObj = pdfReader.getPage(x)
+        pageText = pageObj.extractText()
+        startingPoint = pageText.find('Invoice:') + 9
+        endPoint = startingPoint + 10
+        invoiceNum = pageText[startingPoint:endPoint]
+
+        output = PdfFileWriter()
+        output.addPage(pdfReader.getPage(x))
+        with open(str(invoiceNum) + '.pdf', 'wb') as outputStream:
+            output.write(outputStream)
+        x += 1
+
+print('FINISHED!')
+
