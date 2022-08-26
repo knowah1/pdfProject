@@ -10,7 +10,7 @@ os.chdir(os.path.dirname(invoicePDF)) # set working dir to path of file
 
 with open(invoicePDF, 'rb') as pdfFileObj:
     pdfReader = PyPDF2.PdfFileReader(pdfFileObj)
-
+    print(pdfReader.numPages - 2)
     x = 1     # skips cover page
 
     while x < pdfReader.numPages - 1:
