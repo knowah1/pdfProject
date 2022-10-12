@@ -13,13 +13,15 @@ with open(invoicePDF, 'rb') as pdfFileObj:
     print(pdfReader.numPages - 2)
     x = 1     # skips cover page
 
-    while x < pdfReader.numPages - 1:
+    while x < pdfReader.numPages:
         pageObj = pdfReader.getPage(x)
         pageText = pageObj.extractText()
-        startingPoint = pageText.find('Invoice:') + 9
-        endPoint = startingPoint + 10
+        startingPoint = pageText.find('Invoice:') + 9 #Penske
+        endPoint = startingPoint + 10 #Penske
+        #startingPoint = pageText.find('Bill Ref #') + 11 #Enterprise
+        #endPoint = startingPoint + 12 #Enterprise
         invoiceNum = pageText[startingPoint:endPoint]
-
+    
         output = PdfFileWriter()
         output.addPage(pdfReader.getPage(x))
         with open(str(invoiceNum) + '.pdf', 'wb') as outputStream:
@@ -27,4 +29,3 @@ with open(invoicePDF, 'rb') as pdfFileObj:
         x += 1
 
 print('FINISHED!')
-
